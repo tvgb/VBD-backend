@@ -53,6 +53,8 @@ router.post('/login', async (req, res) => {
 			});
 		}
 
+		req.body.password = `${req.body.password}`;
+
 		// Compare password with password in database, and return signed token if equal
 		await bcrypt.compare(req.body.password, user.password, async (error, result) => {
 
@@ -87,9 +89,20 @@ router.post('/login', async (req, res) => {
 					}
 				);
 
+				res.cookie('isAuthenticated', true,
+					{
+						maxAge: oneDayToMilliseconds,
+						httpOnly: false,
+						secure: process.env.MODE === 'production' ? true : false,
+						sameSite: 'lax'
+					}
+				);
+
 				return res.send();
 
 			}
+
+			console.log('wrong password');
 
 			// Password was incorrect
 			return res.status(400).json({

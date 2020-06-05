@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const checkAuth = require('../middleware/check-auth');
 const Animal = require('../../models/Animal');
 const Vote = require('../../models/Vote');
 
@@ -44,7 +43,6 @@ router.post('/vote', async (req, res) => {
 		const newVote = await vote.save();
 
 		let animal = await Animal.findById(req.body.animalId);
-		console.log(animal);
 		animal.votes.push(newVote._id);
 
 		const updatedAnimal = await animal.save();
