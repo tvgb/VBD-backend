@@ -102,8 +102,6 @@ router.post('/login', async (req, res) => {
 
 			}
 
-			console.log('wrong password');
-
 			// Password was incorrect
 			return res.status(400).json({
 				errorcode: 1
@@ -130,7 +128,7 @@ router.post('/signup', async (req, res) => {
 
 	if (process.env.SECRET_CODE === req.body.secretCode) {
 
-		bcrypt.hash(req.body.password, 10, async (error, hash) => {
+		await bcrypt.hash(req.body.password, 10, async (error, hash) => {
 
 			// Something went wrong while trying to hash the password
 			if (error) {
@@ -162,5 +160,55 @@ router.post('/signup', async (req, res) => {
 	}
 });
 
+router.put('/changePassword', checkAuth, async (req, res) => {
+
+	try {
+		const query = User.findById(req.userData._id);
+		query.select('+password');
+		let user = await query.exec();
+	
+		if (user === null) {
+			return res.status(401).send();
+		}
+		
+		req.body.oldPassword = `${req.body.oldPassword}`;
+
+		// Compare password with password in database, and return signed token if equal
+		await bcrypt.compare(req.body.oldPassword, user.password, async (error, result) => {
+
+			// Something went wrong while trying to compare hashes
+			if (error) {
+				return res.status(500).send();
+			}
+
+			if (result) {
+				await bcrypt.hash(req.body.newPassword, 10, async (error, hash) => {
+
+					// Something went wrong while trying to hash the password
+					if (error) {
+						return res.status(500);
+					}
+		
+					user.password = hash;
+					await user.save();
+
+					return res.status(200).send();
+				});
+			} else {
+				// Password was incorrect
+				return res.status(400).json({
+					errorcode: 1
+				});
+			}
+
+			
+		});
+	} catch (error) {
+		
+		console.log(error);
+
+		return res.status(500).send();
+	}
+});
 
 module.exports = router;

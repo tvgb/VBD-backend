@@ -10,7 +10,7 @@ const VbdAnimalSchema = mongoose.Schema({
 		required: true,
 		default: 'noimage'
 	},
-	vbdVotes: [{
+	votes: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'VbdVote'
 	}]

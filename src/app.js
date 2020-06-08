@@ -12,7 +12,6 @@ const os = require('os');
 
 //route imports
 const userRoutes = require('./api/routes/user');
-const vbdAnimalRoutes = require('./api/routes/vbdAnimal');
 const animalRoutes = require('./api/routes/animal');
 
 const app = express();
@@ -51,7 +50,6 @@ const cors_config = {
 app.use(cors(cors_config));
 
 app.use('/api/user', userRoutes);
-app.use('/api/vbdanimal', vbdAnimalRoutes);
 app.use('/api/animal', animalRoutes);
 
 app.get('/', (req, res) => {

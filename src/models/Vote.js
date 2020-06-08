@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const VoteSchema = mongoose.Schema({
+	bfp: {
+		type: String,
+		required: true,	
+	},
 	vesenScore: {
 		type: Number,
 		validate: {
