@@ -5,9 +5,9 @@ const app = require('./src/app');
 
 if (process.env.MODE === 'production') {
 	// Certificate
-	const privateKey = fs.readFileSync('/etc/letsencrypt/live/xn--rnvikfrisbeegolf-lxb.no/privkey.pem', 'utf8');
-	const certificate = fs.readFileSync('/etc/letsencrypt/live/xn--rnvikfrisbeegolf-lxb.no/cert.pem', 'utf8');
-	const ca = fs.readFileSync('/etc/letsencrypt/live/xn--rnvikfrisbeegolf-lxb.no/chain.pem', 'utf8');
+	const privateKey = fs.readFileSync('/etc/letsencrypt/live/verdensbestedyr.no/privkey.pem', 'utf8');
+	const certificate = fs.readFileSync('/etc/letsencrypt/live/verdensbestedyr.no/cert.pem', 'utf8');
+	const ca = fs.readFileSync('/etc/letsencrypt/live/verdensbestedyr.no/chain.pem', 'utf8');
 
 	const credentials = {
 		key: privateKey,
