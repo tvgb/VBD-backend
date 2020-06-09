@@ -17,11 +17,16 @@ router.get('/', checkAuth, async (req, res) =>  {
 });
 
 // Get user with id
-router.get('/:user_id', checkAuth, async (req, res) => {
-	const userId = req.params.user_id;
+router.get('/cookieuser', checkAuth, async (req, res) => {
+	const userId = req.userData._id;
+
 	try {
 		const user = await User.findById(userId);
-		return res.json(user);
+		return res.json(
+			{
+				userId: user._id
+			}
+		);
 	} catch (error) {
 		res.json(error);
 	}

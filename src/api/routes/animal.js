@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
 const checkAuth = require('../middleware/check-auth');
 const Animal = require('../../models/Animal');
 const VbdAnimal = require('../../models/VbdAnimal');
@@ -84,12 +85,17 @@ router.post('/votevbd', checkAuth, async (req, res) => {
 
 		const newVbdVote = await vbdVote.save();
 
-		let vbdAnimal = await VbdAnimal.findById(req.body.vbdAnimalId);
+		let vbdAnimal = await VbdAnimal.findById(req.body.animalId);
 		vbdAnimal.votes.push(newVbdVote._id);
 
 		const updatedVbdAnimal = await vbdAnimal.save();
 
-		return res.json(updatedVbdAnimal);
+		return res.json(
+			{
+				newVbdVote: newVbdVote,
+				vbdAnimalId: updatedVbdAnimal._id
+			}
+		);
 
 	} catch (error) {
 		console.log(error);
@@ -105,6 +111,27 @@ router.get('/folket', async (req, res) => {
 		query.populate({ path: 'votes' });
 
 		const animals = await query.exec();
+
+		const basic_token = jwt.sign({
+			secret_message: 'lol'
+		},
+		process.env.BASIC_JWT_KEY,
+		{
+			expiresIn: '7d'
+		}
+		);
+
+		// Token expires after 7 days
+		const sevenDaysToMilliseconds = 1000 * 60 * 60 * 24 * 7;
+
+		res.cookie('basic_token', basic_token,
+			{
+				maxAge: sevenDaysToMilliseconds,
+				httpOnly: true,
+				secure: process.env.MODE === 'production' ? true : false,
+				sameSite: 'strict'
+			}
+		);
 
 		return res.json(animals);
 
@@ -132,7 +159,7 @@ router.post('/votefolket', async (req, res) => {
 		let animal = await query.exec();
 
 		for (const vote of animal.votes) {
-			if (vote.bfp === req.body.bfp) {
+				if (vote.bfp === req.body.bfp) {
 				return res.status(406).send();
 			}
 		}

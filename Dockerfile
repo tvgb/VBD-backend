@@ -1,7 +1,7 @@
 FROM node:12
 
 # Create app directory
-WORKDIR /RFGK-backend/
+WORKDIR /vbd-backend/
 
 
 # Install app dependencies

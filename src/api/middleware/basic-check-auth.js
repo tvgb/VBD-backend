@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken');
 //Used to authenticate requests using the token.
 module.exports = (req, res, next) => {
 	try {
-		const access_token = req.cookies.access_token;
-		const decoded = jwt.verify(access_token, process.env.JWT_KEY);
+		const basic_token = req.cookies.basic_token;
+		const decoded = jwt.verify(basic_token, process.env.BASIC_JWT_KEY);
 		req.userData = decoded;
 		
 		next();
@@ -12,8 +12,8 @@ module.exports = (req, res, next) => {
 	} catch (error) {
 		console.log(error);
 
-		return res.status(401).json({
-			message: 'Auth failed'
+		return res.status(403).json({
+			message: 'Forbidden'
 		});
 	}
 	
