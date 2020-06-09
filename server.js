@@ -16,7 +16,7 @@ if (process.env.MODE === 'production') {
 	};
 
 	// Running on port 3000 because NGINX is listening on port 3000
-	const port = 3000;
+	const port = 3005;
 
 	const httpsServer = https.createServer(credentials, app);
 
@@ -24,7 +24,7 @@ if (process.env.MODE === 'production') {
 		console.log('HTTPS Server running on port', port);
 	});
 } else {
-	const port = 3000;
+	const port = 3005;
 
 	const httpServer = http.createServer(app);
 
