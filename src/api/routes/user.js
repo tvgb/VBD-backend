@@ -147,7 +147,7 @@ router.post('/signup', async (req, res) => {
 			const newUser = new User({
 				firstName: req.body.firstName,
 				lastName: req.body.lastName,
-				email: req.body.email,
+				email: req.body.email.toLowerCase(),
 				password: hash,
 				admin: true
 			});

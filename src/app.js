@@ -9,7 +9,6 @@ const cookieParser = require('cookie-parser');
 const formData = require('express-form-data');
 const os = require('os');
 
-
 //route imports
 const userRoutes = require('./api/routes/user');
 const animalRoutes = require('./api/routes/animal');

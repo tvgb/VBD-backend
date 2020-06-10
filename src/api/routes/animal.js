@@ -50,6 +50,7 @@ router.post('/', checkAuth, async (req, res) => {
 
 
 		const vbdAnimal = new VbdAnimal({
+			createdBy: req.body.userId,
 			name: req.body.name,
 			base64Image: base64image
 		});

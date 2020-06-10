@@ -13,7 +13,12 @@ const VbdAnimalSchema = mongoose.Schema({
 	votes: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'VbdVote'
-	}]
+	}],
+	createdBy: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User',
+		required: true
+	},
 });
 
 module.exports = mongoose.model('VbdAnimal', VbdAnimalSchema);
