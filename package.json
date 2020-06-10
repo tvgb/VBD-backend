@@ -1,7 +1,7 @@
 {
   "name": "webpage",
   "version": "1.0.0",
-  "description": "Webpage for Ronvik Frisbeegolf Klubb",
+  "description": "Webpage for Verdens Beste Dyr",
   "main": "index.js",
   "scripts": {
     "start": "node ./node_modules/nodemon/bin/nodemon.js server.js --exec \"npm run lint && node\"",
