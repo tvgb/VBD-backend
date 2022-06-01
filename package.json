@@ -28,7 +28,7 @@
     "morgan": "^1.10.0",
     "nodemon": "^1.19.4",
     "path": "^0.12.7",
-    "sharp": "^0.25.3"
+    "sharp": "^0.30.5"
   },
   "devDependencies": {
     "mocha": "^7.1.2"
